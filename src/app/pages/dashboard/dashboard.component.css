@@ -1,0 +1,59 @@
+.dashboard-wrapper {
+  background: radial-gradient(ellipse at top, #061530 0%, #030a16 80%);
+  min-height: 90vh;
+}
+
+.welcome-banner {
+  border-left: 4px solid var(--accent-gold);
+  background: linear-gradient(135deg, rgba(17, 34, 64, 0.8) 0%, rgba(3, 10, 22, 0.9) 100%);
+}
+
+.custom-progress-bar {
+  height: 8px !important;
+  border-radius: 4px;
+}
+
+::ng-deep .custom-progress-bar .mdc-linear-progress__bar-inner {
+  background-color: var(--accent-gold) !important;
+}
+
+::ng-deep .custom-progress-bar .mdc-linear-progress__track {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Custom Table Styles */
+.custom-table {
+  --bs-table-bg: transparent !important;
+  --bs-table-hover-bg: rgba(212, 175, 55, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+  color: var(--text-primary) !important;
+}
+
+.custom-table th {
+  color: var(--text-secondary) !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  border-bottom-width: 2px !important;
+}
+
+.custom-table td {
+  padding: 12px 8px !important;
+}
+
+/* Notification styling */
+.bg-unread {
+  background: rgba(212, 175, 55, 0.04);
+  border-color: rgba(212, 175, 55, 0.15) !important;
+}
+
+.bg-read {
+  background: rgba(255, 255, 255, 0.01);
+  border-color: rgba(255, 255, 255, 0.05) !important;
+  opacity: 0.8;
+}
+
+.font-monospace {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}

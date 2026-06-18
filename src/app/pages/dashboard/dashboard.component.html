@@ -1,0 +1,237 @@
+<div class="dashboard-wrapper py-5">
+  <div class="container" *ngIf="currentUser">
+    
+    <!-- Welcome Header -->
+    <div class="glass-card welcome-banner p-4 p-md-5 mb-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <div>
+        <span class="badge bg-gold text-dark text-uppercase fw-bold mb-2">{{ currentUser.role }} Dashboard</span>
+        <h1 class="text-white fw-bold m-0">Welcome Back, {{ currentUser.fullName }}!</h1>
+        <p class="text-secondary mt-1 mb-0">Here is the quick status overview for your property redevelopment portal.</p>
+      </div>
+      <div>
+        <button class="btn btn-gold px-4 py-3" (click)="navigateToPortal()">
+          Go to {{ currentUser.role | titlecase }} Portal <i class="bi bi-arrow-right-short fs-5 align-middle"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Info Cards Row -->
+    <div class="row g-4 mb-4">
+      
+      <!-- Property Status Card (For Owners/Renters) -->
+      <div class="col-lg-8 col-md-12" *ngIf="userProperty">
+        <div class="glass-card p-4 h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="text-white m-0 fw-bold"><i class="bi bi-building text-warning me-2"></i> Linked Property</h5>
+            <span class="badge bg-primary px-3 py-2">{{ userProperty.status }} Stage</span>
+          </div>
+          <h3 class="text-white fw-bold mb-1">{{ userProperty.name }}</h3>
+          <p class="text-secondary small mb-4"><i class="bi bi-geo-alt-fill me-1"></i> {{ userProperty.address }}</p>
+          
+          <div class="progress-container mb-2">
+            <div class="d-flex justify-content-between text-secondary small mb-1 fw-bold">
+              <span>Overall Redevelopment Progress</span>
+              <span class="text-warning">{{ userProperty.progressPercentage }}%</span>
+            </div>
+            <mat-progress-bar mode="determinate" [value]="userProperty.progressPercentage" class="custom-progress-bar"></mat-progress-bar>
+          </div>
+          <div class="row text-center mt-3 border-top border-secondary pt-3">
+            <div class="col-6 col-md-3 border-end border-secondary">
+              <small class="text-secondary d-block">Start Date</small>
+              <span class="text-light fw-bold">{{ userProperty.startDate }}</span>
+            </div>
+            <div class="col-6 col-md-3 border-end border-secondary">
+              <small class="text-secondary d-block">Expected Handover</small>
+              <span class="text-light fw-bold">{{ userProperty.expectedCompletionDate }}</span>
+            </div>
+            <div class="col-6 col-md-3 border-end border-secondary">
+              <small class="text-secondary d-block">Total Land Area</small>
+              <span class="text-light fw-bold">{{ userProperty.totalArea }}</span>
+            </div>
+            <div class="col-6 col-md-3">
+              <small class="text-secondary d-block">Active Tenants</small>
+              <span class="text-light fw-bold">{{ userProperty.rentersCount }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- System Status Cards (For Admin / General System overview if property not linked) -->
+      <ng-container *ngIf="!userProperty || currentUser.role === 'admin'">
+        <div class="col-md-4">
+          <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-secondary m-0 uppercase-tracking">Active Projects</h5>
+                <i class="bi bi-buildings-fill text-warning fs-4"></i>
+              </div>
+              <h2 class="display-5 text-white fw-bold">{{ totalProperties }}</h2>
+            </div>
+            <a routerLink="/property" class="text-warning text-decoration-none small">View all listings <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-secondary m-0 uppercase-tracking">Total Agreements</h5>
+                <i class="bi bi-file-earmark-text-fill text-warning fs-4"></i>
+              </div>
+              <h2 class="display-5 text-white fw-bold">{{ totalAgreements }}</h2>
+            </div>
+            <a routerLink="/agreement" class="text-warning text-decoration-none small">Manage contracts <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-secondary m-0 uppercase-tracking">Disbursed Funds</h5>
+                <i class="bi bi-currency-dollar text-warning fs-4"></i>
+              </div>
+              <h2 class="display-5 text-white fw-bold">${{ totalPaymentsAmount | number }}</h2>
+            </div>
+            <a routerLink="/payment" class="text-warning text-decoration-none small">Track transactions <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="col-lg-4 col-md-12" *ngIf="userProperty">
+        <!-- Profile summary card -->
+        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
+          <div>
+            <h5 class="text-white mb-3 fw-bold"><i class="bi bi-person-lines-fill text-warning me-2"></i> Account Profile</h5>
+            <div class="mb-2">
+              <small class="text-secondary d-block">Phone Number</small>
+              <span class="text-light fw-semibold">{{ currentUser.phoneNumber }}</span>
+            </div>
+            <div class="mb-2">
+              <small class="text-secondary d-block">Linked Unit / Property</small>
+              <span class="text-light fw-semibold">{{ currentUser.propertyName }}</span>
+            </div>
+            <div>
+              <small class="text-secondary d-block">Registered Email</small>
+              <span class="text-light fw-semibold">{{ currentUser.email }}</span>
+            </div>
+          </div>
+          <button class="btn btn-outline-gold w-100 mt-3" routerLink="/profile">Edit Profile Settings</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Data Lists Row -->
+    <div class="row g-4">
+      
+      <!-- Left Column: Agreements & Payments -->
+      <div class="col-lg-8">
+        <!-- Agreements Section -->
+        <div class="glass-card p-4 mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="text-white m-0 fw-bold"><i class="bi bi-journal-text text-warning me-2"></i> Active Agreements</h5>
+            <button class="btn btn-sm btn-outline-gold" routerLink="/agreement">View All</button>
+          </div>
+          <div class="table-responsive" *ngIf="recentAgreements.length > 0; else noAgreements">
+            <table class="table table-dark table-hover border-secondary custom-table align-middle">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Property Unit</th>
+                  <th>Status</th>
+                  <th>Signed Date</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let agr of recentAgreements">
+                  <td><span class="fw-bold">{{ agr.type }}</span></td>
+                  <td>{{ agr.propertyName }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="{'bg-success': agr.status === 'Signed', 'bg-warning text-dark': agr.status === 'Pending Review', 'bg-secondary': agr.status === 'Draft'}">
+                      {{ agr.status }}
+                    </span>
+                  </td>
+                  <td>{{ agr.signedDate || 'Pending' }}</td>
+                  <td class="text-end">
+                    <a routerLink="/agreement" class="btn btn-sm btn-outline-light"><i class="bi bi-eye"></i> View</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noAgreements>
+            <p class="text-secondary text-center my-4">No active contracts found for your account.</p>
+          </ng-template>
+        </div>
+
+        <!-- Payments Section -->
+        <div class="glass-card p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="text-white m-0 fw-bold"><i class="bi bi-wallet2 text-warning me-2"></i> Recent Payments</h5>
+            <button class="btn btn-sm btn-outline-gold" routerLink="/payment">View All</button>
+          </div>
+          <div class="table-responsive" *ngIf="recentPayments.length > 0; else noPayments">
+            <table class="table table-dark table-hover border-secondary custom-table align-middle">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Disbursement Date</th>
+                  <th class="text-end">Transaction Hash</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pay of recentPayments">
+                  <td><span class="fw-semibold">{{ pay.type }}</span></td>
+                  <td class="fw-bold text-warning">${{ pay.amount | number }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="{'bg-success': pay.status === 'Processed', 'bg-warning text-dark': pay.status === 'Pending', 'bg-danger': pay.status === 'Failed'}">
+                      {{ pay.status }}
+                    </span>
+                  </td>
+                  <td>{{ pay.date }}</td>
+                  <td class="text-end small font-monospace text-secondary">{{ pay.transactionHash || 'In Progress' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noPayments>
+            <p class="text-secondary text-center my-4">No transactions found for your account.</p>
+          </ng-template>
+        </div>
+      </div>
+
+      <!-- Right Column: Notifications -->
+      <div class="col-lg-4">
+        <div class="glass-card p-4 h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="text-white m-0 fw-bold"><i class="bi bi-bell text-warning me-2"></i> Portal Alerts</h5>
+            <button class="btn btn-sm btn-outline-gold" routerLink="/notifications">View All</button>
+          </div>
+          
+          <div class="notification-list" *ngIf="recentNotifications.length > 0; else noNotifications">
+            <div class="notification-item p-3 mb-2 rounded border border-secondary" *ngFor="let n of recentNotifications" [ngClass]="{'bg-read': n.isRead, 'bg-unread': !n.isRead}">
+              <div class="d-flex justify-content-between align-items-start mb-1">
+                <strong class="text-light small">{{ n.title }}</strong>
+                <span class="badge rounded-pill" [ngClass]="{'bg-info': n.type === 'info', 'bg-success': n.type === 'success', 'bg-warning text-dark': n.type === 'warning', 'bg-danger': n.type === 'error'}">
+                  {{ n.type }}
+                </span>
+              </div>
+              <p class="text-secondary small mb-2 m-0">{{ n.message }}</p>
+              <small class="text-muted d-block text-end">{{ n.timestamp | date:'shortTime' }} ({{ n.timestamp | date:'MMM d' }})</small>
+            </div>
+          </div>
+          
+          <ng-template #noNotifications>
+            <p class="text-secondary text-center my-4">No recent alerts or milestones.</p>
+          </ng-template>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

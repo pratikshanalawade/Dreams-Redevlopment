@@ -1,0 +1,49 @@
+.glass-nav {
+  background: var(--nav-bg) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  z-index: 1050;
+  transition: var(--transition-smooth);
+}
+
+.brand-text {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 1.5px;
+  background: linear-gradient(135deg, #f39c12 0%, #d4af37 50%, #f9e79f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-link {
+  font-weight: 500;
+  color: var(--text-secondary) !important;
+  transition: var(--transition-smooth);
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--accent-gold) !important;
+}
+
+.text-warning-hover:hover {
+  color: var(--accent-gold) !important;
+}
+
+.user-dropdown-menu {
+  background-color: var(--primary-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 8px !important;
+}
+
+.user-dropdown-menu button {
+  color: var(--text-primary) !important;
+}
+
+.user-dropdown-menu button:hover {
+  background-color: rgba(212, 175, 55, 0.1) !important;
+}
+
+.user-dropdown-menu mat-icon {
+  color: var(--accent-gold) !important;
+}

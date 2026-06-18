@@ -1,0 +1,90 @@
+.landing-container {
+  background: radial-gradient(ellipse at top, #061530 0%, #030a16 70%);
+  min-height: 100vh;
+}
+
+/* Hero section with dusk skyline linear-gradient styling */
+.hero-section {
+  min-height: 80vh;
+  background-image: 
+    linear-gradient(180deg, rgba(3, 10, 22, 0.4) 0%, #030a16 100%),
+    radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+    url('https://images.unsplash.com/photo-1542362567-b07eac790abc?q=80&w=1600&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(3, 10, 22, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.hero-card {
+  border-color: rgba(212, 175, 55, 0.25);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  animation: fadeInUp 1s ease-out;
+}
+
+.bg-gold {
+  background-color: var(--accent-gold);
+}
+
+.letter-spacing-1 {
+  letter-spacing: 2px;
+}
+
+.max-w-700 {
+  max-width: 700px;
+}
+
+.max-w-800 {
+  max-width: 800px;
+}
+
+.max-w-600 {
+  max-width: 600px;
+}
+
+/* Feature styling */
+.feature-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 12px;
+}
+
+.feature-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.feature-card:hover {
+  background: rgba(17, 34, 64, 0.85);
+  transform: translateY(-8px);
+}
+
+/* Testimonials */
+.testimonial-card {
+  transition: var(--transition-smooth);
+}
+
+.testimonial-card:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.italic {
+  font-style: italic;
+}
+
+.cta-card {
+  background: linear-gradient(135deg, rgba(17, 34, 64, 0.8) 0%, rgba(3, 10, 22, 0.9) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}

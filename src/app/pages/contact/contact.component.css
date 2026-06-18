@@ -1,0 +1,21 @@
+.contact-wrapper {
+  background: radial-gradient(ellipse at top, #061530 0%, #030a16 80%);
+  min-height: 90vh;
+}
+
+.contact-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background-color: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  flex-shrink: 0;
+}
+
+.office-map {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+  border-style: dashed !important;
+}

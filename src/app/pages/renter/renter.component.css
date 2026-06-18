@@ -1,0 +1,51 @@
+.renter-panel {
+  background: radial-gradient(ellipse at top, #061530 0%, #030a16 80%);
+  min-height: 90vh;
+}
+
+/* Custom Timeline CSS */
+.timeline-steps {
+  position: relative;
+}
+
+.timeline-step {
+  position: relative;
+  z-index: 2;
+}
+
+.step-num {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0 auto;
+  transition: var(--transition-smooth);
+}
+
+.timeline-step.done .step-num {
+  background-color: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: #030a16;
+}
+
+.timeline-step.active .step-num {
+  background-color: transparent;
+  border-color: var(--accent-teal);
+  color: var(--accent-teal);
+  box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+}
+
+.timeline-step.done h6 {
+  color: var(--accent-gold) !important;
+}
+
+.timeline-step.active h6 {
+  color: var(--accent-teal) !important;
+}

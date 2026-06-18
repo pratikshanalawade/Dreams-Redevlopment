@@ -1,0 +1,89 @@
+<div class="property-wrapper py-5">
+  <div class="container">
+    
+    <div class="mb-5 text-center max-w-700 mx-auto">
+      <h1 class="text-white fw-bold">Active Redevelopment Projects</h1>
+      <p class="text-secondary lead">Track live construction phases, RERA certificates, and spatial dimension reports across our active locations.</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Properties List Column -->
+      <div class="col-lg-6">
+        <h5 class="text-white mb-3 uppercase-tracking"><i class="bi bi-list-task text-warning me-2"></i> Project Listings</h5>
+        <div class="d-flex flex-column gap-3">
+          <div *ngFor="let prop of propertiesList" 
+               class="glass-card p-4 clickable-card cursor-pointer border" 
+               [ngClass]="{'border-warning border-2': selectedProperty?.id === prop.id, 'border-secondary': selectedProperty?.id !== prop.id}"
+               (click)="selectProperty(prop)">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h5 class="text-white fw-bold m-0">{{ prop.name }}</h5>
+              <span class="badge" [ngClass]="{
+                'bg-success': prop.status === 'Handover' || prop.status === 'Construction',
+                'bg-warning text-dark': prop.status === 'Demolition' || prop.status === 'Approvals',
+                'bg-secondary': prop.status === 'Initiated' || prop.status === 'Planning'
+              }">{{ prop.status }}</span>
+            </div>
+            <p class="text-secondary small mb-3"><i class="bi bi-geo-alt-fill text-warning me-1"></i> {{ prop.address }}</p>
+            <div class="d-flex justify-content-between text-secondary small">
+              <span>Overall Progress:</span>
+              <strong class="text-light">{{ prop.progressPercentage }}%</strong>
+            </div>
+            <mat-progress-bar mode="determinate" [value]="prop.progressPercentage" class="custom-progress-bar mt-2"></mat-progress-bar>
+          </div>
+        </div>
+      </div>
+
+      <!-- Property Details Column -->
+      <div class="col-lg-6">
+        <h5 class="text-white mb-3 uppercase-tracking"><i class="bi bi-info-circle text-warning me-2"></i> Project Details</h5>
+        
+        <div class="glass-card p-4 p-md-5 sticky-md-top details-panel" *ngIf="selectedProperty">
+          <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+            <h3 class="text-white fw-bold m-0">{{ selectedProperty.name }}</h3>
+            <span class="badge bg-gold text-dark px-3 py-2 uppercase-tracking">{{ selectedProperty.status }}</span>
+          </div>
+
+          <div class="row g-4 mb-4">
+            <div class="col-6">
+              <small class="text-secondary d-block">Location Address</small>
+              <span class="text-light fw-bold">{{ selectedProperty.address }}</span>
+            </div>
+            <div class="col-6">
+              <small class="text-secondary d-block">Authorized Owner</small>
+              <span class="text-light fw-bold">{{ selectedProperty.ownerName }}</span>
+            </div>
+            <div class="col-6">
+              <small class="text-secondary d-block">Total Land Area</small>
+              <span class="text-light fw-bold">{{ selectedProperty.totalArea }}</span>
+            </div>
+            <div class="col-6">
+              <small class="text-secondary d-block">Occupied Units (Renters)</small>
+              <span class="text-light fw-bold">{{ selectedProperty.rentersCount }} Families</span>
+            </div>
+            <div class="col-6">
+              <small class="text-secondary d-block">Project Commenced</small>
+              <span class="text-light fw-bold">{{ selectedProperty.startDate }}</span>
+            </div>
+            <div class="col-6">
+              <small class="text-secondary d-block">Expected Handover</small>
+              <span class="text-warning fw-bold">{{ selectedProperty.expectedCompletionDate }}</span>
+            </div>
+          </div>
+
+          <div class="progress-box mb-4">
+            <div class="d-flex justify-content-between small text-secondary mb-1">
+              <span>Execution Completeness</span>
+              <strong class="text-warning">{{ selectedProperty.progressPercentage }}%</strong>
+            </div>
+            <mat-progress-bar mode="determinate" [value]="selectedProperty.progressPercentage" class="custom-progress-bar"></mat-progress-bar>
+          </div>
+
+          <div class="d-grid mt-4">
+            <a routerLink="/signup" class="btn btn-gold py-3"><i class="bi bi-box-arrow-in-right me-2"></i> Enroll In Redevelopment Portal</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

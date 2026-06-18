@@ -1,0 +1,161 @@
+<div class="admin-panel py-5">
+  <div class="container">
+    
+    <div class="mb-5">
+      <h1 class="text-white fw-bold m-0"><i class="bi bi-shield-lock-fill text-warning me-2"></i> Executive Administration Portal</h1>
+      <p class="text-secondary mb-0">Modify redevelopment stages, issue tenant allowances, and broadcast notifications.</p>
+    </div>
+
+    <!-- Admin Operations Tabs -->
+    <mat-tab-group class="custom-tabs glass-card p-2">
+      
+      <!-- Properties Tab -->
+      <mat-tab label="Manage Project Properties">
+        <div class="tab-body p-4">
+          <h5 class="text-white mb-4"><i class="bi bi-buildings text-warning me-2"></i> Current Redevelopment Properties</h5>
+          
+          <div class="row g-4">
+            <div class="col-md-6" *ngFor="let prop of properties">
+              <div class="glass-card p-4 border border-secondary">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <h5 class="text-white fw-bold m-0">{{ prop.name }}</h5>
+                    <small class="text-secondary">{{ prop.address }}</small>
+                  </div>
+                  <span class="badge bg-gold text-dark">{{ prop.status }} ({{ prop.progressPercentage }}%)</span>
+                </div>
+
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="w-100 dark-form-field">
+                      <mat-label>Redevelopment Stage</mat-label>
+                      <mat-select [(ngModel)]="prop.status">
+                        <mat-option *ngFor="let st of statusChoices" [value]="st">{{ st }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="w-100 dark-form-field">
+                      <mat-label>Progress %</mat-label>
+                      <input matInput type="number" min="0" max="100" [(ngModel)]="prop.progressPercentage">
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="text-secondary small">Owner: <strong class="text-light">{{ prop.ownerName }}</strong></span>
+                  <button class="btn btn-sm btn-gold" (click)="updateProperty(prop)">
+                    <i class="bi bi-save me-1"></i> Save Changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      
+      <!-- Payouts Tab -->
+      <mat-tab label="Process Financial Disbursements">
+        <div class="tab-body p-4">
+          <h5 class="text-white mb-4"><i class="bi bi-cash-coin text-warning me-2"></i> Pending and Processed Payouts</h5>
+          
+          <div class="table-responsive">
+            <table class="table table-dark table-hover border-secondary custom-table align-middle">
+              <thead>
+                <tr>
+                  <th>Recipient</th>
+                  <th>Property Unit</th>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pay of payments">
+                  <td><span class="fw-bold">{{ pay.recipientName }}</span></td>
+                  <td>{{ pay.propertyName }}</td>
+                  <td class="fw-bold text-warning">${{ pay.amount | number }}</td>
+                  <td>{{ pay.type }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="{'bg-success': pay.status === 'Processed', 'bg-warning text-dark': pay.status === 'Pending'}">
+                      {{ pay.status }}
+                    </span>
+                  </td>
+                  <td>{{ pay.date }}</td>
+                  <td class="text-end">
+                    <button *ngIf="pay.status === 'Pending'" class="btn btn-sm btn-gold" (click)="triggerPayout(pay.id)">
+                      <i class="bi bi-check-circle-fill me-1"></i> Process Payment
+                    </button>
+                    <span *ngIf="pay.status === 'Processed'" class="text-success small"><i class="bi bi-check-all"></i> Success</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Broadcast Alerts Tab -->
+      <mat-tab label="Broadcast System Alerts">
+        <div class="tab-body p-4">
+          <h5 class="text-white mb-4"><i class="bi bi-megaphone text-warning me-2"></i> Issue Push Notification</h5>
+          
+          <div *ngIf="notificationSuccess" class="alert alert-success border-0 bg-success-subtle text-success mb-4" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> Notification broadcasted successfully!
+          </div>
+
+          <form [formGroup]="notificationForm" (ngSubmit)="dispatchNotification()" class="max-w-600">
+            <div class="mb-3">
+              <mat-form-field appearance="outline" class="w-100 dark-form-field">
+                <mat-label>Alert Title</mat-label>
+                <input matInput formControlName="title" placeholder="e.g. Construction Progress Update">
+                <mat-error *ngIf="notificationForm.get('title')?.errors?.['required']">Title is required</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="mb-3">
+              <mat-form-field appearance="outline" class="w-100 dark-form-field">
+                <mat-label>Scope (Target Role)</mat-label>
+                <mat-select formControlName="role">
+                  <mat-option value="all">All Users</mat-option>
+                  <mat-option value="owner">Property Owners Only</mat-option>
+                  <mat-option value="renter">Tenants / Renters Only</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" class="w-100 dark-form-field">
+                  <mat-label>Alert Severity</mat-label>
+                  <mat-select formControlName="type">
+                    <mat-option value="info">Info (Blue)</mat-option>
+                    <mat-option value="success">Success (Green)</mat-option>
+                    <mat-option value="warning">Warning (Yellow)</mat-option>
+                    <mat-option value="error">Critical (Red)</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <mat-form-field appearance="outline" class="w-100 dark-form-field">
+                <mat-label>Detailed message body</mat-label>
+                <textarea matInput formControlName="message" rows="4" placeholder="Write message details..."></textarea>
+                <mat-error *ngIf="notificationForm.get('message')?.errors?.['required']">Message is required</mat-error>
+              </mat-form-field>
+            </div>
+
+            <button type="submit" class="btn btn-gold px-4 py-3">
+              <i class="bi bi-send-fill me-2"></i> Dispatch Announcement
+            </button>
+          </form>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </div>
+</div>
