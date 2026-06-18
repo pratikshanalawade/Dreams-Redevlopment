@@ -1,0 +1,52 @@
+.owner-panel {
+  background: radial-gradient(ellipse at top, #061530 0%, #030a16 80%);
+  min-height: 90vh;
+}
+
+/* Material Stepper Overrides */
+::ng-deep .custom-stepper {
+  background: transparent !important;
+}
+
+::ng-deep .custom-stepper .mat-horizontal-stepper-header-container {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 15px;
+}
+
+::ng-deep .custom-stepper .mat-step-header {
+  border-radius: 8px;
+}
+
+::ng-deep .custom-stepper .mat-step-header .mat-step-icon {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+::ng-deep .custom-stepper .mat-step-header .mat-step-icon-selected {
+  background-color: var(--accent-gold) !important;
+  color: #030a16 !important;
+  border-color: var(--accent-gold);
+}
+
+::ng-deep .custom-stepper .mat-step-header .mat-step-icon-state-edit {
+  background-color: var(--accent-gold) !important;
+  color: #030a16 !important;
+}
+
+::ng-deep .custom-stepper .mat-step-header .mat-step-label {
+  color: var(--text-secondary) !important;
+}
+
+::ng-deep .custom-stepper .mat-step-header .mat-step-label.mat-step-label-active {
+  color: var(--accent-gold) !important;
+  font-weight: bold;
+}
+
+::ng-deep .custom-stepper .mat-stepper-horizontal-line {
+  border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.step-content {
+  animation: fadeInUp 0.5s ease-out;
+}

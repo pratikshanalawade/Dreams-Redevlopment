@@ -1,0 +1,93 @@
+<div class="profile-wrapper py-5">
+  <div class="container" *ngIf="currentUser">
+    <div class="row">
+      
+      <div class="col-lg-4 mb-4">
+        <!-- Account Overview Panel -->
+        <div class="glass-card p-4 text-center">
+          <i class="bi bi-person-bounding-box text-warning fs-1"></i>
+          <h3 class="text-white fw-bold mt-3 mb-1">{{ currentUser.fullName }}</h3>
+          <span class="badge bg-gold text-dark text-uppercase fw-bold mb-3">{{ currentUser.role }}</span>
+          
+          <hr class="border-secondary my-3">
+          
+          <div class="text-start">
+            <div class="mb-2">
+              <small class="text-secondary d-block">Linked Unit / Property</small>
+              <span class="text-light fw-semibold">{{ currentUser.propertyName || 'No property linked' }}</span>
+            </div>
+            <div>
+              <small class="text-secondary d-block">Account Status</small>
+              <span class="text-success fw-bold"><i class="bi bi-patch-check-fill me-1"></i> Active Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <!-- Profile Form panel -->
+        <div class="glass-card p-4 p-md-5">
+          <h4 class="text-white fw-bold mb-4"><i class="bi bi-gear-fill text-warning me-2"></i> Account Settings</h4>
+          
+          <div *ngIf="successMessage" class="alert alert-success border-0 bg-success-subtle text-success mb-4" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> {{ successMessage }}
+          </div>
+
+          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <mat-form-field appearance="outline" class="w-100 dark-form-field">
+                  <mat-label>Full Name</mat-label>
+                  <input matInput formControlName="fullName">
+                  <mat-error *ngIf="profileForm.get('fullName')?.errors?.['required']">Full Name is required</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 mb-3">
+                <mat-form-field appearance="outline" class="w-100 dark-form-field">
+                  <mat-label>Email Address</mat-label>
+                  <input matInput formControlName="email">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <mat-form-field appearance="outline" class="w-100 dark-form-field">
+                  <mat-label>Phone Number</mat-label>
+                  <input matInput formControlName="phoneNumber">
+                  <mat-error *ngIf="profileForm.get('phoneNumber')?.errors?.['required']">Phone is required</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 mb-3">
+                <mat-form-field appearance="outline" class="w-100 dark-form-field">
+                  <mat-label>Assigned Unit</mat-label>
+                  <input matInput formControlName="propertyName">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <mat-form-field appearance="outline" class="w-100 dark-form-field">
+                <mat-label>Registered Address</mat-label>
+                <textarea matInput formControlName="address" rows="3"></textarea>
+                <mat-error *ngIf="profileForm.get('address')?.errors?.['required']">Address is required</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="mb-4">
+              <mat-form-field appearance="outline" class="w-100 dark-form-field">
+                <mat-label>Reset Password (Leave blank to keep current)</mat-label>
+                <input matInput type="password" formControlName="password" placeholder="New Password">
+              </mat-form-field>
+            </div>
+
+            <button type="submit" class="btn btn-gold px-4 py-3">
+              <i class="bi bi-check2-circle me-1"></i> Update Profile Details
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

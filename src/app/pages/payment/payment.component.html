@@ -1,0 +1,74 @@
+<div class="payment-wrapper py-5">
+  <div class="container" *ngIf="currentUserFullName">
+    
+    <div class="mb-5">
+      <h1 class="text-white fw-bold m-0"><i class="bi bi-wallet2 text-warning me-2"></i> Financial Disbursements & Payouts</h1>
+      <p class="text-secondary mb-0">Track monthly rent allowances, bank wire statuses, and access billing invoices.</p>
+    </div>
+
+    <!-- Payout Summary Cards -->
+    <div class="row g-4 mb-4">
+      <div class="col-md-6">
+        <div class="glass-card p-4 text-center">
+          <small class="text-secondary uppercase-tracking d-block mb-1">Total Funds Received (Settled)</small>
+          <h2 class="display-5 text-gradient-gold fw-bold">${{ totalDisbursed | number }}</h2>
+          <span class="text-success small"><i class="bi bi-check-circle-fill me-1"></i> Credited to linked account</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="glass-card p-4 text-center">
+          <small class="text-secondary uppercase-tracking d-block mb-1">Upcoming / Pending Payouts</small>
+          <h2 class="display-5 text-light fw-bold">${{ pendingDisbursed | number }}</h2>
+          <span class="text-warning small"><i class="bi bi-clock-history me-1"></i> Awaiting administrative sign-off</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payout Logs Table -->
+    <div class="glass-card p-4">
+      <h5 class="text-white mb-3 fw-bold"><i class="bi bi-receipt-cutoff text-warning me-2"></i> Payout History</h5>
+      
+      <div class="table-responsive" *ngIf="paymentsList.length > 0; else noPayments">
+        <table class="table table-dark table-hover border-secondary custom-table align-middle">
+          <thead>
+            <tr>
+              <th>Invoice ID</th>
+              <th>Property Details</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Transfer Date</th>
+              <th>Bank Transaction Hash</th>
+              <th class="text-end">Billing Receipt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pay of paymentsList">
+              <td class="font-monospace text-secondary small">{{ pay.id }}</td>
+              <td>{{ pay.propertyName }}</td>
+              <td><span class="fw-semibold">{{ pay.type }}</span></td>
+              <td class="fw-bold text-warning">${{ pay.amount | number }}</td>
+              <td>
+                <span class="badge" [ngClass]="{'bg-success': pay.status === 'Processed', 'bg-warning text-dark': pay.status === 'Pending'}">
+                  {{ pay.status }}
+                </span>
+              </td>
+              <td>{{ pay.date }}</td>
+              <td class="small font-monospace text-secondary">{{ pay.transactionHash || 'Processing...' }}</td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-outline-gold" (click)="downloadReceipt(pay.id)" [disabled]="pay.status !== 'Processed'">
+                  <i class="bi bi-printer-fill me-1"></i> Invoice
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #noPayments>
+        <p class="text-secondary text-center my-4">No disbursements registered on this account.</p>
+      </ng-template>
+    </div>
+
+  </div>
+</div>

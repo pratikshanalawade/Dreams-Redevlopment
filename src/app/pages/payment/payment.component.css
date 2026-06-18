@@ -1,0 +1,4 @@
+.payment-wrapper {
+  background: radial-gradient(ellipse at top, #061530 0%, #030a16 80%);
+  min-height: 90vh;
+}

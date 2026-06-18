@@ -1,0 +1,58 @@
+<div class="notifications-wrapper py-5">
+  <div class="container" *ngIf="currentUserRole">
+    
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-5">
+      <div>
+        <h1 class="text-white fw-bold m-0"><i class="bi bi-bell-fill text-warning me-2"></i> System Alerts & Updates</h1>
+        <p class="text-secondary mb-0">Track construction stage approvals, financial transfers, and official RERA notices.</p>
+      </div>
+      <button class="btn btn-outline-gold" (click)="markAllAsRead()" [disabled]="notificationsList.length === 0">
+        <i class="bi bi-check2-all me-1"></i> Mark All as Read
+      </button>
+    </div>
+
+    <div class="row" *ngIf="notificationsList.length > 0; else noNotifications">
+      <div class="col-lg-8 mx-auto">
+        <div class="d-flex flex-column gap-3">
+          
+          <div *ngFor="let n of notificationsList" 
+               class="glass-card p-4 border position-relative" 
+               [ngClass]="{'bg-read border-secondary': n.isRead, 'bg-unread border-warning': !n.isRead}">
+            
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div class="d-flex align-items-center gap-2">
+                <span class="unread-dot bg-warning" *ngIf="!n.isRead"></span>
+                <h5 class="text-white fw-bold m-0">{{ n.title }}</h5>
+              </div>
+              <span class="badge rounded-pill" [ngClass]="{
+                'bg-info': n.type === 'info', 
+                'bg-success': n.type === 'success', 
+                'bg-warning text-dark': n.type === 'warning', 
+                'bg-danger': n.type === 'error'
+              }">{{ n.type }}</span>
+            </div>
+
+            <p class="text-secondary small mb-3">{{ n.message }}</p>
+            
+            <div class="d-flex justify-content-between align-items-center border-top border-secondary pt-3 mt-2">
+              <small class="text-muted"><i class="bi bi-clock-history me-1"></i> {{ n.timestamp | date:'medium' }}</small>
+              <button *ngIf="!n.isRead" class="btn btn-sm btn-link text-warning p-0 text-decoration-none fw-bold small" (click)="markAsRead(n.id)">
+                Mark as read <i class="bi bi-chevron-right fs-8"></i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noNotifications>
+      <div class="text-center py-5 glass-card max-w-600 mx-auto">
+        <i class="bi bi-bell-slash display-4 text-warning"></i>
+        <h4 class="text-white fw-bold mt-3">All Caught Up!</h4>
+        <p class="text-secondary">You do not have any notification logs or pending alerts right now.</p>
+      </div>
+    </ng-template>
+
+  </div>
+</div>

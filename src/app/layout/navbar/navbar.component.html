@@ -1,0 +1,93 @@
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top glass-nav px-md-4">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/landing">
+      <span class="brand-icon me-2">
+        <i class="bi bi-building-up text-warning fs-3"></i>
+      </span>
+      <span class="brand-text text-uppercase tracking-wider fw-bold">Dreams Redevelopment</span>
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center gap-2">
+        <li class="nav-item">
+          <a class="nav-link px-3" routerLink="/landing" routerLinkActive="active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3" routerLink="/property" routerLinkActive="active">Properties</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3" routerLink="/contact" routerLinkActive="active">Contact Us</a>
+        </li>
+
+        <ng-container *ngIf="!currentUser">
+          <li class="nav-item ms-lg-3">
+            <a class="btn btn-outline-gold py-2 px-3" routerLink="/login">Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-gold py-2 px-3" routerLink="/signup">Get Started</a>
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="currentUser">
+          <!-- Role-specific navbar items -->
+          <li class="nav-item">
+            <a class="nav-link px-3" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+          </li>
+          <li class="nav-item" *ngIf="currentUser.role === 'admin'">
+            <a class="nav-link px-3 text-warning-hover" routerLink="/admin" routerLinkActive="active">Admin Portal</a>
+          </li>
+          <li class="nav-item" *ngIf="currentUser.role === 'owner'">
+            <a class="nav-link px-3 text-warning-hover" routerLink="/owner" routerLinkActive="active">Owner Panel</a>
+          </li>
+          <li class="nav-item" *ngIf="currentUser.role === 'renter'">
+            <a class="nav-link px-3 text-warning-hover" routerLink="/renter" routerLinkActive="active">Renter Panel</a>
+          </li>
+
+          <!-- Shared quick tools -->
+          <li class="nav-item">
+            <a class="nav-link px-3 position-relative" routerLink="/notifications" routerLinkActive="active">
+              <i class="bi bi-bell-fill fs-5"></i>
+              <span class="position-absolute top-2 start-75 translate-middle p-1 bg-danger border border-light rounded-circle">
+                <span class="visually-hidden">New alerts</span>
+              </span>
+            </a>
+          </li>
+
+          <!-- User Profile Dropdown -->
+          <li class="nav-item dropdown ms-lg-2">
+            <button class="btn btn-outline-gold d-flex align-items-center gap-2 py-2 px-3" [matMenuTriggerFor]="userMenu">
+              <i class="bi bi-person-circle fs-5"></i>
+              <span class="d-none d-md-inline">{{ currentUser.fullName }}</span>
+              <i class="bi bi-chevron-down fs-8"></i>
+            </button>
+            <mat-menu #userMenu="matMenu" class="user-dropdown-menu">
+              <div class="dropdown-header px-3 py-2 border-bottom border-secondary text-secondary">
+                <small class="d-block text-warning text-uppercase fw-bold">{{ currentUser.role }}</small>
+                <span>{{ currentUser.email }}</span>
+              </div>
+              <button mat-menu-item routerLink="/profile">
+                <mat-icon>person</mat-icon>
+                <span>Profile Settings</span>
+              </button>
+              <button mat-menu-item routerLink="/agreement">
+                <mat-icon>description</mat-icon>
+                <span>Agreements</span>
+              </button>
+              <button mat-menu-item routerLink="/payment">
+                <mat-icon>payments</mat-icon>
+                <span>Payments</span>
+              </button>
+              <button mat-menu-item (click)="logout()" class="text-danger">
+                <mat-icon class="text-danger">logout</mat-icon>
+                <span>Logout</span>
+              </button>
+            </mat-menu>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</nav>

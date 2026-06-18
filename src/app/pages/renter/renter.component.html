@@ -1,0 +1,140 @@
+<div class="renter-panel py-5">
+  <div class="container" *ngIf="currentUserFullName">
+    
+    <!-- Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5">
+      <div>
+        <h1 class="text-white fw-bold m-0">Renter Reallocation Portal</h1>
+        <p class="text-secondary mb-0">Track temporary housing allowances, access agreements, and view moving timelines for <span class="text-warning fw-bold">{{ propertyName }}</span></p>
+      </div>
+      <a routerLink="/contact" class="btn btn-outline-gold"><i class="bi bi-headset me-2"></i> Tenant Helpdesk</a>
+    </div>
+
+    <!-- Timeline Tracker & Status Grid -->
+    <div class="row g-4 mb-5">
+      <!-- Status Cards -->
+      <div class="col-md-4">
+        <div class="glass-card p-4 h-100 text-center d-flex flex-column justify-content-center">
+          <small class="text-secondary uppercase-tracking mb-2">Monthly Rent Allowance</small>
+          <h2 class="display-6 text-warning fw-bold mb-2">$1,000</h2>
+          <span class="badge bg-success py-2 px-3 mx-auto">Disbursed via EFT</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="glass-card p-4 h-100 text-center d-flex flex-column justify-content-center">
+          <small class="text-secondary uppercase-tracking mb-2">Reallocation Deadline</small>
+          <h2 class="display-6 text-white fw-bold mb-2">June 25, 2026</h2>
+          <span class="badge bg-warning text-dark py-2 px-3 mx-auto">Moving Phase Active</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="glass-card p-4 h-100 text-center d-flex flex-column justify-content-center">
+          <small class="text-secondary uppercase-tracking mb-2">New Lease Priority</small>
+          <h2 class="display-6 text-white fw-bold mb-2">Priority Level 1</h2>
+          <span class="badge bg-info py-2 px-3 mx-auto">Post-Build Option Secured</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+      <!-- Relocation Phase Progress Timeline -->
+      <div class="col-lg-12">
+        <div class="glass-card p-4 p-md-5">
+          <h5 class="text-white mb-4 uppercase-tracking text-center"><i class="bi bi-clock-history text-warning me-2"></i> Relocation Phase Timeline</h5>
+          
+          <div class="row g-4 text-center timeline-steps">
+            <div class="col-md-3">
+              <div class="timeline-step done">
+                <div class="step-num"><i class="bi bi-check-lg"></i></div>
+                <h6 class="text-white fw-bold mt-3">Step 1: Sign Reallocation</h6>
+                <p class="text-secondary small">Agree on temporary rent support rate</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="timeline-step active">
+                <div class="step-num">2</div>
+                <h6 class="text-white fw-bold mt-3">Step 2: Evacuation & Moving</h6>
+                <p class="text-secondary small">Vacate unit and secure transit home</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="timeline-step">
+                <div class="step-num">3</div>
+                <h6 class="text-white fw-bold mt-3">Step 3: Building Phase</h6>
+                <p class="text-secondary small">Temporary allowance disbursed monthly</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="timeline-step">
+                <div class="step-num">4</div>
+                <h6 class="text-white fw-bold mt-3">Step 4: Re-entry Option</h6>
+                <p class="text-secondary small">Priority choices for re-rental lease</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Reallocation Agreements -->
+      <div class="col-lg-6">
+        <div class="glass-card p-4 h-100">
+          <h5 class="text-white mb-4 fw-bold"><i class="bi bi-file-earmark-text text-warning me-2"></i> Tenant Agreements</h5>
+          
+          <div class="list-group list-group-dark border-0">
+            <div *ngFor="let agr of renterAgreements" class="list-group-item glass-card mb-3 p-3 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center border border-secondary">
+              <div>
+                <h6 class="text-white fw-bold mb-1">{{ agr.type }} Contract</h6>
+                <p class="text-secondary small mb-2 m-0">Parties: <span class="text-light">{{ agr.parties.join(', ') }}</span></p>
+                <span class="badge" [ngClass]="{'bg-success': agr.status === 'Signed', 'bg-warning text-dark': agr.status !== 'Signed'}">{{ agr.status }}</span>
+                <span class="text-secondary small ms-3" *ngIf="agr.signedDate">Signed: {{ agr.signedDate }}</span>
+              </div>
+              <div class="mt-3 mt-sm-0">
+                <button *ngIf="agr.status !== 'Signed'" class="btn btn-sm btn-gold" (click)="signAgreement(agr.id)">
+                  <i class="bi bi-pencil-square"></i> Sign Digitally
+                </button>
+                <a routerLink="/agreement" class="btn btn-sm btn-outline-light ms-2">Info</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Allowance Payouts -->
+      <div class="col-lg-6">
+        <div class="glass-card p-4 h-100">
+          <h5 class="text-white mb-4 fw-bold"><i class="bi bi-cash-stack text-warning me-2"></i> Allowance Payout Logs</h5>
+          
+          <div class="table-responsive">
+            <table class="table table-dark table-hover border-secondary custom-table align-middle">
+              <thead>
+                <tr>
+                  <th>Cycle</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Tx ID</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pay of renterPayments">
+                  <td><span class="fw-semibold">{{ pay.type }}</span></td>
+                  <td class="fw-bold text-warning">${{ pay.amount | number }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="{'bg-success': pay.status === 'Processed', 'bg-warning text-dark': pay.status === 'Pending'}">
+                      {{ pay.status }}
+                    </span>
+                  </td>
+                  <td>{{ pay.date }}</td>
+                  <td class="small font-monospace text-secondary">{{ pay.transactionHash ? pay.transactionHash.substring(0, 10) + '...' : 'In Progress' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

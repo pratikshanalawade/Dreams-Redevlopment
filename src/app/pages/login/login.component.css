@@ -1,0 +1,59 @@
+.auth-wrapper {
+  background: radial-gradient(ellipse at bottom, #061530 0%, #030a16 80%);
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+}
+
+.auth-card {
+  border-color: rgba(212, 175, 55, 0.25);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Material form-field overrides for dark design */
+::ng-deep .dark-form-field .mdc-text-field--outlined {
+  --mdc-outlined-text-field-container-color: rgba(255, 255, 255, 0.03);
+  --mdc-outlined-text-field-outline-color: rgba(255, 255, 255, 0.15);
+  --mdc-outlined-text-field-focus-outline-color: var(--accent-gold);
+  --mdc-outlined-text-field-hover-outline-color: rgba(212, 175, 55, 0.5);
+  --mdc-outlined-text-field-label-text-color: var(--text-secondary);
+  --mdc-outlined-text-field-focus-label-text-color: var(--accent-gold);
+  --mdc-outlined-text-field-input-text-color: var(--text-primary);
+  --mdc-outlined-text-field-hover-label-text-color: var(--text-secondary);
+  border-radius: 8px;
+}
+
+::ng-deep .dark-form-field .mdc-text-field--outlined .mdc-notched-outline__leading,
+::ng-deep .dark-form-field .mdc-text-field--outlined .mdc-notched-outline__notch,
+::ng-deep .dark-form-field .mdc-text-field--outlined .mdc-notched-outline__trailing {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+::ng-deep .dark-form-field .mdc-text-field--outlined:hover .mdc-notched-outline__leading,
+::ng-deep .dark-form-field .mdc-text-field--outlined:hover .mdc-notched-outline__notch,
+::ng-deep .dark-form-field .mdc-text-field--outlined:hover .mdc-notched-outline__trailing {
+  border-color: rgba(212, 175, 55, 0.5) !important;
+}
+
+::ng-deep .dark-form-field .mdc-text-field--outlined.mdc-text-field--focused .mdc-notched-outline__leading,
+::ng-deep .dark-form-field .mdc-text-field--outlined.mdc-text-field--focused .mdc-notched-outline__notch,
+::ng-deep .dark-form-field .mdc-text-field--outlined.mdc-text-field--focused .mdc-notched-outline__trailing {
+  border-color: var(--accent-gold) !important;
+  border-width: 2px !important;
+}
+
+.uppercase-tracking {
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.8rem;
+}
+
+.demo-logins button {
+  transition: var(--transition-smooth);
+}
+
+.demo-logins button:hover {
+  background-color: rgba(212, 175, 55, 0.1);
+  color: var(--accent-gold);
+}

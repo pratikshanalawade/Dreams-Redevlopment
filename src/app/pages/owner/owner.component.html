@@ -1,0 +1,155 @@
+<div class="owner-panel py-5">
+  <div class="container" *ngIf="ownerProperty">
+    
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5">
+      <div>
+        <h1 class="text-white fw-bold m-0">Owner Redevelopment Panel</h1>
+        <p class="text-secondary mb-0">Track milestones, authorize legal agreements, and monitor payouts for <span class="text-warning fw-bold">{{ ownerProperty.name }}</span></p>
+      </div>
+      <a routerLink="/contact" class="btn btn-outline-gold"><i class="bi bi-chat-left-dots-fill me-2"></i> Request Legal Consultation</a>
+    </div>
+
+    <!-- Step Tracker (Angular Material Stepper) -->
+    <div class="glass-card p-4 p-md-5 mb-5">
+      <h5 class="text-white mb-4 uppercase-tracking text-center"><i class="bi bi-compass text-warning me-2"></i> Redevelopment Milestone Tracker</h5>
+      <mat-stepper [selectedIndex]="currentStepIndex" class="custom-stepper" [linear]="false">
+        <mat-step label="Initiated" state="initiated">
+          <ng-template matStepContent>
+            <div class="step-content py-4 text-center">
+              <i class="bi bi-file-earmark-check text-warning display-4"></i>
+              <h4 class="text-white fw-bold mt-3">Stage 1: Proposal & Feasibility</h4>
+              <p class="text-secondary max-w-600 mx-auto">
+                Property owner submits proposal. Dreams Redevelopment architects perform land surveys, check zoning codes, and issue initial viability reports.
+              </p>
+            </div>
+          </ng-template>
+        </mat-step>
+        <mat-step label="Planning" state="planning">
+          <ng-template matStepContent>
+            <div class="step-content py-4 text-center">
+              <i class="bi bi-bezier2 text-warning display-4"></i>
+              <h4 class="text-white fw-bold mt-3">Stage 2: Architectural Blueprints</h4>
+              <p class="text-secondary max-w-600 mx-auto">
+                Drafting design specs, layouts, elevations, and luxury amenities configurations. Landowners vote and approve draft masterplan.
+              </p>
+            </div>
+          </ng-template>
+        </mat-step>
+        <mat-step label="Approvals" state="approvals">
+          <ng-template matStepContent>
+            <div class="step-content py-4 text-center">
+              <i class="bi bi-shield-check text-warning display-4"></i>
+              <h4 class="text-white fw-bold mt-3">Stage 3: Municipal & Legal clearances</h4>
+              <p class="text-secondary max-w-600 mx-auto">
+                Obtaining RERA registration, municipal floor indexes, environmental clearances, and structural integrity certifications.
+              </p>
+              <div class="alert alert-info d-inline-block mt-3 mb-0" role="alert">
+                <i class="bi bi-info-circle-fill me-2"></i> Current Status: Awaiting final environment clearance certificate. Expected by end of month.
+              </div>
+            </div>
+          </ng-template>
+        </mat-step>
+        <mat-step label="Demolition" state="demolition">
+          <ng-template matStepContent>
+            <div class="step-content py-4 text-center">
+              <i class="bi bi-trash3 text-warning display-4"></i>
+              <h4 class="text-white fw-bold mt-3">Stage 4: Reallocation & Demolition</h4>
+              <p class="text-secondary max-w-600 mx-auto">
+                Relocating occupants, setting up temporary housing rent allowances, capping utilities, and starting site clearing.
+              </p>
+            </div>
+          </ng-template>
+        </mat-step>
+        <mat-step label="Construction" state="construction">
+          <ng-template matStepContent>
+            <div class="step-content py-4 text-center">
+              <i class="bi bi-crane text-warning display-4"></i>
+              <h4 class="text-white fw-bold mt-3">Stage 5: Excavation & Structural Erection</h4>
+              <p class="text-secondary max-w-600 mx-auto">
+                Piling foundation, erecting steel pillars, casting concrete slabs, plumbing/electrical conduits layouts, and interior brickwork.
+              </p>
+            </div>
+          </ng-template>
+        </mat-step>
+        <mat-step label="Handover" state="handover">
+          <ng-template matStepContent>
+            <div class="step-content py-4 text-center">
+              <i class="bi bi-key text-warning display-4"></i>
+              <h4 class="text-white fw-bold mt-3">Stage 6: Finishes, Fit-outs & Handover</h4>
+              <p class="text-secondary max-w-600 mx-auto">
+                Installing premium bath fixtures, vitrified tiles, elevator final tests, securing occupancy certificate (OC), and property key handover ceremony.
+              </p>
+            </div>
+          </ng-template>
+        </mat-step>
+      </mat-stepper>
+    </div>
+
+    <div class="row g-4">
+      <!-- Left Column: Legal Contracts & Documents -->
+      <div class="col-lg-6">
+        <div class="glass-card p-4 h-100">
+          <h5 class="text-white mb-4 fw-bold"><i class="bi bi-file-earmark-pdf text-warning me-2"></i> Legal Agreements & Signatures</h5>
+          
+          <div class="list-group list-group-dark border-0">
+            <div *ngFor="let agr of ownerAgreements" class="list-group-item glass-card mb-3 p-3 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center border border-secondary">
+              <div>
+                <h6 class="text-white fw-bold mb-1">{{ agr.type }} Agreement</h6>
+                <p class="text-secondary small mb-2 m-0">
+                  Parties: <span class="text-light">{{ agr.parties.join(', ') }}</span>
+                </p>
+                <span class="badge" [ngClass]="{'bg-success': agr.status === 'Signed', 'bg-warning text-dark': agr.status !== 'Signed'}">
+                  {{ agr.status }}
+                </span>
+                <span class="text-secondary small ms-3" *ngIf="agr.signedDate">Signed on: {{ agr.signedDate }}</span>
+              </div>
+              <div class="mt-3 mt-sm-0">
+                <button *ngIf="agr.status !== 'Signed'" class="btn btn-sm btn-gold me-2" (click)="signContract(agr.id)">
+                  <i class="bi bi-pencil-square"></i> Sign Digitally
+                </button>
+                <a routerLink="/agreement" class="btn btn-sm btn-outline-light">
+                  <i class="bi bi-download"></i> Doc Info
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Disbursement Logs -->
+      <div class="col-lg-6">
+        <div class="glass-card p-4 h-100">
+          <h5 class="text-white mb-4 fw-bold"><i class="bi bi-piggy-bank text-warning me-2"></i> Rent & Reallocation Payouts</h5>
+          
+          <div class="table-responsive">
+            <table class="table table-dark table-hover border-secondary custom-table align-middle">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Hash</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pay of ownerPayments">
+                  <td><span class="fw-semibold">{{ pay.type }}</span></td>
+                  <td class="fw-bold text-warning">${{ pay.amount | number }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="{'bg-success': pay.status === 'Processed', 'bg-warning text-dark': pay.status === 'Pending'}">
+                      {{ pay.status }}
+                    </span>
+                  </td>
+                  <td>{{ pay.date }}</td>
+                  <td class="small font-monospace text-secondary">{{ pay.transactionHash ? pay.transactionHash.substring(0, 10) + '...' : 'Pending' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

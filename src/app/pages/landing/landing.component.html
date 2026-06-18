@@ -1,0 +1,120 @@
+<div class="landing-container">
+  
+  <!-- Hero Section -->
+  <section class="hero-section position-relative d-flex align-items-center justify-content-center py-5">
+    <div class="hero-overlay"></div>
+    <div class="container position-relative z-2">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-lg-7 mx-auto text-center py-5">
+          <div class="hero-card glass-card p-5 mt-4 text-center">
+            <span class="badge bg-gold text-dark mb-3 px-3 py-2 text-uppercase fw-bold letter-spacing-1">Visionary Urban Development</span>
+            <h1 class="display-3 text-white fw-bold mb-3">Start Your Redevelopment Journey</h1>
+            <p class="lead text-secondary mb-4">
+              Transforming urban landscapes through automated precision and visionary planning. We provide a transparent, end-to-end platform for premium residential and commercial redevelopment.
+            </p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+              <button class="btn btn-gold btn-lg px-4 py-3" routerLink="/signup">
+                Get Started <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+              <button class="btn btn-outline-gold btn-lg px-4 py-3" routerLink="/property">
+                Learn More
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section py-5">
+    <div class="container">
+      <div class="row text-center gy-4">
+        <div class="col-md-4" *ngFor="let stat of stats">
+          <div class="stat-item p-4 glass-card h-100 d-flex flex-column justify-content-center">
+            <h2 class="display-4 fw-bold text-gradient-gold m-0">{{ stat.value }}</h2>
+            <p class="text-uppercase tracking-wider text-secondary fw-semibold mt-2 m-0">{{ stat.label }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visionary Approach Features Section -->
+  <section class="features-section py-5 my-5">
+    <div class="container">
+      <div class="text-center mb-5 max-w-700 mx-auto">
+        <h2 class="h1 text-white fw-bold">A Visionary Approach to Urban Renewal</h2>
+        <p class="text-secondary lead">
+          A platform for modern redevelopment with transparent, trackable, and professional planning for owners and developers.
+        </p>
+      </div>
+      
+      <div class="row gy-4 mt-2">
+        <div class="col-md-6 col-lg-3" *ngFor="let item of features">
+          <div class="feature-card glass-card p-4 h-100 d-flex flex-column">
+            <div class="feature-icon-wrapper mb-3 d-flex align-items-center justify-content-center">
+              <mat-icon class="feature-icon text-warning">{{ item.icon }}</mat-icon>
+            </div>
+            <h4 class="text-white fw-bold mb-3">{{ item.title }}</h4>
+            <p class="text-secondary mb-0 flex-grow-1">{{ item.description }}</p>
+            <a *ngIf="item.title === 'Expert Consultation'" routerLink="/contact" class="btn btn-link text-warning p-0 mt-3 text-decoration-none fw-bold d-flex align-items-center">
+              Book a Consultation <i class="bi bi-chevron-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials-section py-5 my-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="h1 text-white fw-bold">Voices of Success</h2>
+        <p class="text-secondary">Hear from those who have transformed their lives through redevelopment.</p>
+      </div>
+
+      <div class="row gy-4 justify-content-center">
+        <div class="col-lg-4 col-md-6" *ngFor="let item of testimonials">
+          <div class="testimonial-card glass-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div class="quote-content mb-4">
+              <i class="bi bi-quote fs-1 text-warning d-block mb-2"></i>
+              <p class="text-light italic">"{{ item.quote }}"</p>
+            </div>
+            <div class="author-details d-flex align-items-center border-top border-secondary pt-3">
+              <div class="author-avatar me-3">
+                <i class="bi bi-person-circle fs-3 text-warning"></i>
+              </div>
+              <div>
+                <h6 class="text-white fw-bold m-0">{{ item.author }}</h6>
+                <small class="text-secondary">{{ item.role }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="cta-section py-5 my-5 text-center">
+    <div class="container">
+      <div class="cta-card glass-card p-5 max-w-800 mx-auto">
+        <h2 class="display-5 text-white fw-bold mb-3">Ready to Redefine Your Future?</h2>
+        <p class="lead text-secondary mb-4 max-w-600 mx-auto">
+          Join the 10,000+ families who have transformed their properties into modern architectural marvels.
+        </p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <button class="btn btn-gold btn-lg px-4 py-3" routerLink="/signup">
+            Schedule a Free Demo
+          </button>
+          <button class="btn btn-outline-gold btn-lg px-4 py-3" routerLink="/contact">
+            Talk to an Expert
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

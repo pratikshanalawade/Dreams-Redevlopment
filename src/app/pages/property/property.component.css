@@ -1,0 +1,21 @@
+.property-wrapper {
+  background: radial-gradient(ellipse at top, #061530 0%, #030a16 80%);
+  min-height: 90vh;
+}
+
+.clickable-card {
+  transition: var(--transition-smooth);
+}
+
+.clickable-card:hover {
+  transform: translateX(5px);
+  background-color: rgba(17, 34, 64, 0.8) !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.details-panel {
+  top: 100px;
+}
